@@ -1,18 +1,36 @@
 package com.IronhackLastProject.BankingApp.entities.accounts;
 
-import ch.qos.logback.core.status.Status;
 import com.IronhackLastProject.BankingApp.embeddable.Money;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
+import com.IronhackLastProject.BankingApp.enums.Status;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 public abstract class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    //@NotNull
     private Money balance;
+
+
+    @Embedded
+    //@NotBlank(message = "This field can't be blank")
+    //@NotNull(message = "This field can't be null")
+    @AttributeOverrides({
+            @AttributeOverride(name = "currency", column = @Column(name = "feeCurrency")),
+            @AttributeOverride(name = "amount", column = @Column(name = "feeAmount"))
+    })
+    private Money penaltyFee = new Money(BigDecimal.valueOf(40));
+    //@NotNull
+    //@NotBlank
     @ManyToOne
     @JoinColumn(name = "primaryOwnerId")
     private AccountHolder primaryOwner;
@@ -21,17 +39,21 @@ public abstract class Account {
     @JoinColumn(name = "secondaryOwnerId")
     private AccountHolder secondaryOwner; // (optional)
 
+    //@NotNull
+    //@NotBlank
     private LocalDate creationDate;
 
+    //@NotNull
+    //@NotBlank
     private Status status;
 
-    public Account(Long id, Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner, LocalDate creationDate, Status status) {
-        this.id = id;
+    public Account(Money balance, Money penaltyFee, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
         this.balance = balance;
+        this.penaltyFee = penaltyFee;
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;
-        this.creationDate = creationDate;
-        this.status = status;
+        this.creationDate = LocalDate.now();
+        this.status = Status.ACTIVE;
     }
 
     public Account() {
@@ -51,6 +73,14 @@ public abstract class Account {
 
     public void setBalance(Money balance) {
         this.balance = balance;
+    }
+
+    public Money getPenaltyFee() {
+        return penaltyFee;
+    }
+
+    public void setPenaltyFee(Money penaltyFee) {
+        this.penaltyFee = penaltyFee;
     }
 
     public AccountHolder getPrimaryOwner() {
@@ -85,3 +115,4 @@ public abstract class Account {
         this.status = status;
     }
 }
+

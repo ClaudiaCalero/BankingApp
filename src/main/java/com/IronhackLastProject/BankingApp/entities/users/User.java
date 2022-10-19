@@ -1,10 +1,8 @@
 package com.IronhackLastProject.BankingApp.entities.users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 public abstract class User {
 
@@ -12,7 +10,8 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    public User() {
+    }
 
     public Long getId() {
         return id;
@@ -22,11 +21,4 @@ public abstract class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

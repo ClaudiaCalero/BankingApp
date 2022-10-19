@@ -1,4 +1,8 @@
 package com.IronhackLastProject.BankingApp.controllers.accounts;
 
-public class StudentsCheckingController {
+import com.IronhackLastProject.BankingApp.controllers.accounts.interfaces.StudentsChekingControllerInterface;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class StudentsCheckingController implements StudentsChekingControllerInterface {
 }

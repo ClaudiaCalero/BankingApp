@@ -1,4 +1,46 @@
 package com.IronhackLastProject.BankingApp.entities.accounts;
 
+import com.IronhackLastProject.BankingApp.embeddable.Money;
+import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
+import com.IronhackLastProject.BankingApp.enums.Status;
+
+import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Entity
 public class Savings extends Account {
+
+
+    @Embedded
+    //@NotBlank(message = "This field can not be blank")
+    //@NotNull(message = "This field can not be null")
+    //@DecimalMin(value ="1000")//, message =""
+    @AttributeOverrides({
+            @AttributeOverride(name="currency", column = @Column(name="minimumCurrency")),
+            @AttributeOverride(name="amount", column = @Column(name="amountCurrency"))
+    })
+    //private Money minimumBalance = new Money(BigDecimal.valueOf(1000));
+    private Money minimumBalance;
+    //@NotBlank(message = "This field can not be blank")
+    //@NotNull(message = "This field can not be null")
+    private BigDecimal interestedRate;
+
+
+    public Savings() {
+    }
+
+    public Savings(Money balance, Money penaltyFee, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money minimumBalance, BigDecimal interestedRate) {
+        super(balance, penaltyFee, primaryOwner, secondaryOwner);
+        this.minimumBalance = minimumBalance;
+        this.interestedRate = interestedRate;
+    }
+
+    public Savings(Money minimumBalance, BigDecimal interestedRate) {
+        this.minimumBalance = minimumBalance;
+        this.interestedRate = interestedRate;
+    }
 }
