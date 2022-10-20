@@ -13,6 +13,7 @@ import com.IronhackLastProject.BankingApp.repositories.accounts.CreditCardReposi
 import com.IronhackLastProject.BankingApp.repositories.accounts.SavingsRepository;
 import com.IronhackLastProject.BankingApp.repositories.accounts.StudentsCheckingRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
+import com.IronhackLastProject.BankingApp.services.accounts.interfaces.AccountServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 
 @Service
-public class AccountService{
+public class AccountService implements AccountServiceInterface {
     @Autowired
     AccountHolderRepository accountHolderRepository;
     @Autowired
