@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AccountHolderRepository extends JpaRepository<AccountHolder, Long> {
-   // List<AccountHolder> findAll();
 
-    AccountHolder save(AccountHolder accountHolder);
+    //AccountHolder save(AccountHolder accountHolder);
 }

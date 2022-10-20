@@ -11,5 +11,4 @@ import java.util.Optional;
 @Repository
 public interface CheckingRepository extends JpaRepository<Checking, Long> {
 
-    //List<Checking> findAll();
 }

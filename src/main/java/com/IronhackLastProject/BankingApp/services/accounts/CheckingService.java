@@ -14,12 +14,5 @@ import java.util.List;
 public class CheckingService  {
 
 
-    @Autowired
-    CheckingRepository checkingRepository;
-
-   /* public List<Checking> getAllCheckings() {
-        return checkingRepository.findAll();
-    }*/
-
 
 }

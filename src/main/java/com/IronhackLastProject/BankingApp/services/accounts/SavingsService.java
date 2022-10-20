@@ -9,12 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SavingsService implements SavingsServiceInterface {
+public class SavingsService  {
 
-    @Autowired
-    SavingsRepository savingsRepository;
-
-    public List<Savings> getAllSavings() {
-        return savingsRepository.findAll();
-    }
 }

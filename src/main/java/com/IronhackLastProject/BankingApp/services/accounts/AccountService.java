@@ -8,13 +8,11 @@ import com.IronhackLastProject.BankingApp.entities.accounts.CreditCard;
 import com.IronhackLastProject.BankingApp.entities.accounts.Savings;
 import com.IronhackLastProject.BankingApp.entities.accounts.StudentsChecking;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
-import com.IronhackLastProject.BankingApp.entities.users.ThirdParty;
 import com.IronhackLastProject.BankingApp.repositories.accounts.CheckingRepository;
 import com.IronhackLastProject.BankingApp.repositories.accounts.CreditCardRepository;
 import com.IronhackLastProject.BankingApp.repositories.accounts.SavingsRepository;
 import com.IronhackLastProject.BankingApp.repositories.accounts.StudentsCheckingRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
-import com.IronhackLastProject.BankingApp.repositories.users.ThirdPartyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -106,14 +104,7 @@ public class AccountService{
                 new ResponseStatusException(HttpStatus.NO_CONTENT));
         AccountHolder secondaryOwner = accountHolderRepository.findById(studentsCheckingDTO.getSecondaryOwner()).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NO_CONTENT));
-        BigDecimal interestedRate =  new BigDecimal(studentsCheckingDTO.getInterestedRate());
 
-        Money minimumBalance = null;
-        if(studentsCheckingDTO.getMinimumBalance() == null){
-            minimumBalance = new Money(new BigDecimal(5000));
-        }else{
-            minimumBalance = new Money(new BigDecimal(studentsCheckingDTO.getMinimumBalance()));
-        }
 
         StudentsChecking studentsChecking = new StudentsChecking(balance, penaltyFee, primaryOwner, secondaryOwner);
 

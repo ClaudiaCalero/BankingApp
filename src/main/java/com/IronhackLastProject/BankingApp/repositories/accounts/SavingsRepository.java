@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface SavingsRepository extends JpaRepository<Savings, Long> {
-    //List<Savings> findAll();
 }

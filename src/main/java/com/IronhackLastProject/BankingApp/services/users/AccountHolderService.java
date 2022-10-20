@@ -5,8 +5,12 @@ import com.IronhackLastProject.BankingApp.entities.DTOs.TransferAnswerDTO;
 import com.IronhackLastProject.BankingApp.entities.DTOs.TransferDTO;
 import com.IronhackLastProject.BankingApp.entities.accounts.Account;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
+import com.IronhackLastProject.BankingApp.entities.users.Admin;
+import com.IronhackLastProject.BankingApp.entities.users.ThirdParty;
+import com.IronhackLastProject.BankingApp.entities.users.User;
 import com.IronhackLastProject.BankingApp.repositories.accounts.AccountRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
+import com.IronhackLastProject.BankingApp.repositories.users.AdminRepository;
 import com.IronhackLastProject.BankingApp.services.users.interfaces.AccountHolderServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,10 +33,6 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     @Autowired
     AccountRepository accountRepository;
 
-
-    public AccountHolder createAccountHolder(AccountHolder accountHolder){
-        return accountHolderRepository.save(accountHolder);
-    }
     public TransferAnswerDTO transferFromOneAccountToAnother(TransferDTO transferDTO) {
 
         if (accountRepository.findById(transferDTO.getReceivingMoneyId()).isPresent() && accountRepository.findById(transferDTO.getSendingMoneyId()).isPresent()) {
@@ -68,6 +68,7 @@ public class AccountHolderService implements AccountHolderServiceInterface {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account Holder do not exist");
     }
+
 
 
 }

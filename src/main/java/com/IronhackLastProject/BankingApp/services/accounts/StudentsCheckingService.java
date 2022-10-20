@@ -9,11 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StudentsCheckingService implements StudentsChekingServiceInterface {
-    @Autowired
-    StudentsCheckingRepository studentsCheckingRepository;
+public class StudentsCheckingService  {
 
-    public List<StudentsChecking> getAllStudentsCheckings() {
-        return studentsCheckingRepository.findAll();
-    }
 }

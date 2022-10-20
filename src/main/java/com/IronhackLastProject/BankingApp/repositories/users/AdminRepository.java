@@ -5,7 +5,9 @@ import com.IronhackLastProject.BankingApp.entities.users.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdminRepository extends JpaRepository<AccountHolder, Long> {
-    //List<Admin> findAll();
+    Optional<Object> findByName(String name);
+
 }
