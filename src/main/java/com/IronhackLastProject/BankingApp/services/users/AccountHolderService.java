@@ -5,6 +5,7 @@ import com.IronhackLastProject.BankingApp.entities.DTOs.TransferAnswerDTO;
 import com.IronhackLastProject.BankingApp.entities.DTOs.TransferDTO;
 import com.IronhackLastProject.BankingApp.entities.accounts.Account;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
+import com.IronhackLastProject.BankingApp.enums.Status;
 import com.IronhackLastProject.BankingApp.repositories.accounts.AccountRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
 import com.IronhackLastProject.BankingApp.services.users.interfaces.AccountHolderServiceInterface;
@@ -65,6 +66,24 @@ public class AccountHolderService implements AccountHolderServiceInterface {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account Holder do not exist");
     }
 
+    public Account changeAccountStatus(Status status, Long id){
+        Account account = accountRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NO_CONTENT));
+        account.setStatus(status);
+        return accountRepository.save(account);
+
+    }
+
+    public AccountHolder createAccountHolder(AccountHolder accountHolder) {
+        return accountHolderRepository.save(accountHolder);
+    }
+
+    public AccountHolder getAccountHolder(Long id) {
+        return accountHolderRepository.findById(id).get();
+    }
+
+    public void deleteAccount(Long id) {
+        accountRepository.deleteById(id);
+    }
 
 
 }

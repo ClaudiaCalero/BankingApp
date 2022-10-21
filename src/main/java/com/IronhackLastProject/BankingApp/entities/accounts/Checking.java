@@ -29,7 +29,7 @@ public class Checking extends Account {
     //@NotNull(message = "This field can not be null")
     @AttributeOverrides({
             @AttributeOverride(name="currency", column = @Column(name="monthlyCurrency")),
-            @AttributeOverride(name="amount", column = @Column(name="monthlyCurrency"))
+            @AttributeOverride(name="amount", column = @Column(name="monthlyAmount"))
 
     })
     private final Money monthlyMaintenanceFee = new Money(BigDecimal.valueOf(12));
@@ -42,11 +42,9 @@ public class Checking extends Account {
     public Checking() {
     }
 
-
     public Money getMinimumBalance() {
         return minimumBalance;
     }
-
 
     public Money getMonthlyMaintenanceFee() {
         return monthlyMaintenanceFee;

@@ -1,3 +1,5 @@
+package com.IronhackLastProject.BankingApp;
+
 import com.IronhackLastProject.BankingApp.entities.DTOs.TransferDTO;
 import com.IronhackLastProject.BankingApp.repositories.accounts.AccountRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
@@ -12,30 +14,26 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @SpringBootTest
 public class AccountHolderControllerTest {
 
+    @Autowired
+    AccountHolderRepository accountHolderRespository;
+    @Autowired
+    AccountRepository accountRepository;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+    private MockMvc mockMvc;
 
-        @Autowired
-        AccountHolderRepository accountHolderRepository;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-        @Autowired
-        AccountRepository accountRepository;
-        @Autowired
-        private WebApplicationContext webApplicationContext;
-        private MockMvc mockMvc;
-
-        private final ObjectMapper objectMapper = new ObjectMapper();
-
-        @BeforeEach
-        public void setUp() {
-            mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        }
+    @BeforeEach
+    public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
 
         @Test
         void transfer_money_OK() throws Exception {

@@ -1,11 +1,15 @@
 package com.IronhackLastProject.BankingApp.controllers.accounts;
 
+
 import com.IronhackLastProject.BankingApp.entities.DTOs.AccountDTO;
 import com.IronhackLastProject.BankingApp.entities.accounts.*;
 import com.IronhackLastProject.BankingApp.services.accounts.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AccountController {
@@ -15,7 +19,7 @@ public class AccountController {
 
     @PostMapping("/createChecking")
     @ResponseStatus(HttpStatus.CREATED)
-    public Checking createChecking(@RequestBody AccountDTO checkingDTO) {
+    public Account createChecking(@RequestBody AccountDTO checkingDTO) {
         return accountService.createChecking(checkingDTO);
 
     }

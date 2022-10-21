@@ -3,10 +3,7 @@ package com.IronhackLastProject.BankingApp.services.accounts;
 
 import com.IronhackLastProject.BankingApp.embeddable.Money;
 import com.IronhackLastProject.BankingApp.entities.DTOs.AccountDTO;
-import com.IronhackLastProject.BankingApp.entities.accounts.Checking;
-import com.IronhackLastProject.BankingApp.entities.accounts.CreditCard;
-import com.IronhackLastProject.BankingApp.entities.accounts.Savings;
-import com.IronhackLastProject.BankingApp.entities.accounts.StudentsChecking;
+import com.IronhackLastProject.BankingApp.entities.accounts.*;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
 import com.IronhackLastProject.BankingApp.repositories.accounts.CheckingRepository;
 import com.IronhackLastProject.BankingApp.repositories.accounts.CreditCardRepository;
@@ -20,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Period;
 
 @Service
 public class AccountService implements AccountServiceInterface {
@@ -36,18 +35,34 @@ public class AccountService implements AccountServiceInterface {
 
 
 
-    public Checking createChecking(AccountDTO checkingDTO){
+    public Account createChecking(AccountDTO checkingDTO){
 
         Money balance = new Money(new BigDecimal(checkingDTO.getBalance()));
         Money penaltyFee = new Money(new BigDecimal(checkingDTO.getPenaltyFee()));
         AccountHolder primaryOwner = accountHolderRepository.findById(checkingDTO.getPrimaryOwner()).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NO_CONTENT));
-        AccountHolder secondaryOwner = accountHolderRepository.findById(checkingDTO.getSecondaryOwner()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NO_CONTENT));
+
+        AccountHolder secondaryOwner = null;
+        if(checkingDTO.getSecondaryOwner() != null && accountHolderRepository.findById(checkingDTO.getSecondaryOwner()).isPresent()){
+            secondaryOwner = accountHolderRepository.findById(checkingDTO.getSecondaryOwner()).get();
+        }
+        Money minimumBalance = null;
+        if(checkingDTO.getMinimumBalance() == null){
+            minimumBalance = new Money(new BigDecimal(250));
+        }else{
+            minimumBalance = new Money(new BigDecimal(checkingDTO.getMinimumBalance()));
+        }
+
+        if(Period.between(primaryOwner.getDateOfBirth(), LocalDate.now()).getYears() < 24){
+            return studentsCheckingRepository.save(new StudentsChecking(balance, penaltyFee, primaryOwner, secondaryOwner));
+
+        }
         Checking checking = new Checking(balance, penaltyFee, primaryOwner, secondaryOwner);
 
         return checkingRepository.save(checking);
     }
+
+
 
     public Savings createSavings(AccountDTO savingsDTO){
 

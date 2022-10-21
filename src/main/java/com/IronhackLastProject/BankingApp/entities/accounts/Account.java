@@ -2,6 +2,7 @@ package com.IronhackLastProject.BankingApp.entities.accounts;
 
 import com.IronhackLastProject.BankingApp.embeddable.Money;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
+import com.IronhackLastProject.BankingApp.entities.users.User;
 import com.IronhackLastProject.BankingApp.enums.Status;
 
 import javax.persistence.*;
@@ -19,7 +20,6 @@ public abstract class Account {
 
     //@NotNull
     private Money balance;
-
 
     @Embedded
     //@NotBlank(message = "This field can't be blank")
@@ -47,6 +47,7 @@ public abstract class Account {
     //@NotBlank
     private Status status;
 
+
     public Account(Money balance, Money penaltyFee, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
         this.balance = balance;
         this.penaltyFee = penaltyFee;
@@ -54,6 +55,7 @@ public abstract class Account {
         this.secondaryOwner = secondaryOwner;
         this.creationDate = LocalDate.now();
         this.status = Status.ACTIVE;
+
     }
 
     public Account() {

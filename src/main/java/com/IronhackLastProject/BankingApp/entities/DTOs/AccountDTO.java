@@ -74,4 +74,6 @@ public class AccountDTO {
     public void setMinimumBalance(String minimumBalance) {
         this.minimumBalance = minimumBalance;
     }
+
+
 }

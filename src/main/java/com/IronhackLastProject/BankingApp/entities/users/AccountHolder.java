@@ -52,7 +52,8 @@ public class AccountHolder extends User {
     //private Money monthlySpended = new Money(BigDecimal.valueOf(0)); extra points
 
 
-    public AccountHolder(LocalDate dateOfBirth, Address primaryAddress, String name, Address mailingAddress) {
+    public AccountHolder(String username, String password, LocalDate dateOfBirth, Address primaryAddress, String name, Address mailingAddress) {
+        super(username, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
         this.name = name;
@@ -109,4 +110,6 @@ public class AccountHolder extends User {
     public void setSecondaryAccountList(List<Account> secondaryAccountList) {
         this.secondaryAccountList = secondaryAccountList;
     }
+
+
 }

@@ -23,11 +23,11 @@ public class Savings extends Account {
             @AttributeOverride(name="currency", column = @Column(name="minimumCurrency")),
             @AttributeOverride(name="amount", column = @Column(name="amountCurrency"))
     })
-    //private Money minimumBalance = new Money(BigDecimal.valueOf(1000));
-    private Money minimumBalance;
+    private Money minimumBalance = new Money(BigDecimal.valueOf(1000));
+    //private Money minimumBalance;
     //@NotBlank(message = "This field can not be blank")
     //@NotNull(message = "This field can not be null")
-    private BigDecimal interestedRate;
+    private BigDecimal interestedRate = BigDecimal.valueOf(0.0025);
 
 
     public Savings() {
@@ -41,6 +41,22 @@ public class Savings extends Account {
 
     public Savings(Money minimumBalance, BigDecimal interestedRate) {
         this.minimumBalance = minimumBalance;
+        this.interestedRate = interestedRate;
+    }
+
+    public Money getMinimumBalance() {
+        return minimumBalance;
+    }
+
+    public void setMinimumBalance(Money minimumBalance) {
+        this.minimumBalance = minimumBalance;
+    }
+
+    public BigDecimal getInterestedRate() {
+        return interestedRate;
+    }
+
+    public void setInterestedRate(BigDecimal interestedRate) {
         this.interestedRate = interestedRate;
     }
 }
