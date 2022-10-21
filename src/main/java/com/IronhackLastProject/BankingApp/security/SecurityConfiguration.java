@@ -36,7 +36,7 @@ public class SecurityConfiguration {
         httpSecurity.httpBasic();
 
         httpSecurity.authorizeRequests()
-                .mvcMatchers(HttpMethod.GET, "/users").hasAnyRole("ADMIN", "USER", "HOLDER")
+                .mvcMatchers(HttpMethod.GET, "/users").hasAnyRole( "HOLDER", "ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/accountHolder").hasRole("HOLDER")
                 .mvcMatchers(HttpMethod.PUT, "/changeStatus").hasRole("HOLDER")
                 .mvcMatchers(HttpMethod.PATCH, "/transfer").hasRole("ADMIN")

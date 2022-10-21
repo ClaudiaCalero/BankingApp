@@ -67,7 +67,7 @@ public class BankingAppApplication implements CommandLineRunner {
 
 		ThirdParty thirdParty = new ThirdParty("Cyltia",passwordEncoder.encode("1234"), "123", "Cyltia");
 		thirdPartyRepository.save(thirdParty);
-		roleRepository.save(new Role("THIRDPARTY", thirdParty));
+		roleRepository.save(new Role("USER", thirdParty));
 
 
 		Checking checking1 = new Checking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, accountHolder);
