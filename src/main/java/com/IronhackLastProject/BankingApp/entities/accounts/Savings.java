@@ -18,7 +18,6 @@ public class Savings extends Account {
     @Embedded
     //@NotBlank(message = "This field can not be blank")
     //@NotNull(message = "This field can not be null")
-    //@DecimalMin(value ="1000")//, message =""
     @AttributeOverrides({
             @AttributeOverride(name="currency", column = @Column(name="minimumCurrency")),
             @AttributeOverride(name="amount", column = @Column(name="amountCurrency"))

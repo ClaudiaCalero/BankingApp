@@ -67,23 +67,28 @@ public class BankingAppApplication implements CommandLineRunner {
 
 		ThirdParty thirdParty = new ThirdParty("Cyltia",passwordEncoder.encode("1234"), "123", "Cyltia");
 		thirdPartyRepository.save(thirdParty);
-		roleRepository.save(new Role("USER", thirdParty));
+		roleRepository.save(new Role("THIRD", thirdParty));
 
 
 		Checking checking1 = new Checking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, accountHolder);
 		Checking checking2 = new Checking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, accountHolder2);
 
 		checkingRepository.saveAll(List.of(checking1, checking2));
+		roleRepository.save(new Role("HOLDER", accountHolder));
+
 
 		CreditCard creditCard1 = new CreditCard(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, accountHolder, new Money(new BigDecimal(250)),  new BigDecimal(String.valueOf(0.5)));
 		CreditCard creditCard2 = new CreditCard(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, accountHolder2, new Money(new BigDecimal(250)),  new BigDecimal(String.valueOf(0.5)));
 
 		creditCardRepository.saveAll(List.of(creditCard1, creditCard2));
+		roleRepository.save(new Role("HOLDER", accountHolder));
+
 
 		StudentsChecking studentsChecking1 = new StudentsChecking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, accountHolder);
 		StudentsChecking studentsChecking2 = new StudentsChecking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, accountHolder2);
 
 		studentsCheckingRepository.saveAll(List.of(studentsChecking1, studentsChecking2));
+		roleRepository.save(new Role("HOLDER", accountHolder));
 
 		System.out.println(accountHolderRepository.save(accountHolder));
 	}

@@ -1,9 +1,11 @@
 package com.IronhackLastProject.BankingApp.entities.users;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Admin extends User {
+    @NotNull
     private String name;
     public Admin() {
     }

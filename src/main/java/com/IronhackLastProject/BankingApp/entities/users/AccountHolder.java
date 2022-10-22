@@ -47,11 +47,6 @@ public class AccountHolder extends User {
     @JsonIgnore
     private List<Account> secondaryAccountList;
 
-    //@NotBlank(message = "This field can not be blank")
-    //@NotNull(message = "This field can not be null")
-    //private Money monthlySpended = new Money(BigDecimal.valueOf(0)); extra points
-
-
     public AccountHolder(String username, String password, LocalDate dateOfBirth, Address primaryAddress, String name, Address mailingAddress) {
         super(username, password);
         this.dateOfBirth = dateOfBirth;

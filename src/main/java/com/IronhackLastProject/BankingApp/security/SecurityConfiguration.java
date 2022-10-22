@@ -37,12 +37,12 @@ public class SecurityConfiguration {
 
         httpSecurity.authorizeRequests()
                 .mvcMatchers(HttpMethod.GET, "/users").hasAnyRole( "HOLDER", "ADMIN")
-                .mvcMatchers(HttpMethod.POST, "/accountHolder").hasRole("HOLDER")
-                .mvcMatchers(HttpMethod.PUT, "/changeStatus").hasRole("HOLDER")
-                .mvcMatchers(HttpMethod.PATCH, "/transfer").hasRole("ADMIN")
-                .mvcMatchers(HttpMethod.DELETE, "/deleteAccount").hasRole("ADMIN")
-                .mvcMatchers(HttpMethod.POST,"/admin").hasRole("ADMIN")
-                .mvcMatchers(HttpMethod.POST,"/thirdParty").hasRole("USER")
+                .mvcMatchers(HttpMethod.POST, "/accountHolder**").hasRole("HOLDER")
+                .mvcMatchers(HttpMethod.PUT, "/changeStatus**").hasRole("HOLDER")
+                .mvcMatchers(HttpMethod.PATCH, "/transfer**").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.DELETE, "/deleteAccount**").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.POST,"/admin**").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.POST,"/thirdParty**").hasRole("THIRD")
 
                 .anyRequest().permitAll();
 
