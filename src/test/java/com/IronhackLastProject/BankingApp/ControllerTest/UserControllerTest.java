@@ -1,17 +1,13 @@
 package com.IronhackLastProject.BankingApp.ControllerTest;
 
 import com.IronhackLastProject.BankingApp.embeddable.Address;
-import com.IronhackLastProject.BankingApp.entities.DTOs.AccountDTO;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
 import com.IronhackLastProject.BankingApp.entities.users.Admin;
 import com.IronhackLastProject.BankingApp.entities.users.ThirdParty;
-import com.IronhackLastProject.BankingApp.repositories.accounts.AccountRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.AdminRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +19,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @SpringBootTest
@@ -64,9 +58,9 @@ class UserControllerTest {
 
     @Test
     void UserShouldCreateAccountHolder_Created() throws Exception {
-        Address address = new Address("Del Valles", "1234", "Parets");
-        LocalDate dateOfBirth = LocalDate.of(1996, 2, 22);
 
+        Address address = new Address("Del Valles", "12345", "desi@hola");
+        LocalDate dateOfBirth = LocalDate.of(1996, 2, 22);
         AccountHolder accountHolder = new AccountHolder("Des", "1234567", dateOfBirth, address, "Desi", address);
 
         String body = objectMapper.writeValueAsString(accountHolder);
@@ -87,6 +81,5 @@ class UserControllerTest {
 
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Nurs"));
     }
-
 }
 

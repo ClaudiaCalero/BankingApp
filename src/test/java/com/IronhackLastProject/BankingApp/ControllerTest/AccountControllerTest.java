@@ -1,23 +1,14 @@
 package com.IronhackLastProject.BankingApp.ControllerTest;
 
-import com.IronhackLastProject.BankingApp.embeddable.Money;
 import com.IronhackLastProject.BankingApp.entities.DTOs.AccountDTO;
-import com.IronhackLastProject.BankingApp.entities.DTOs.TransferDTO;
-import com.IronhackLastProject.BankingApp.entities.accounts.Account;
-import com.IronhackLastProject.BankingApp.entities.accounts.Checking;
-import com.IronhackLastProject.BankingApp.entities.accounts.CreditCard;
-import com.IronhackLastProject.BankingApp.entities.accounts.Savings;
-import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
 import com.IronhackLastProject.BankingApp.repositories.accounts.AccountRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -29,7 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 public class AccountControllerTest {
-
     @Autowired
     AccountHolderRepository accountHolderRepository;
     @Autowired
@@ -56,7 +46,6 @@ public class AccountControllerTest {
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Owner"));
     }
 
-
     @Test
     void AccountShouldCreateCheckingAccounts_Created() throws Exception {
         AccountDTO accountDTO = new AccountDTO("1000", "50", 1L, 2L, "0.0025", "100");
@@ -67,8 +56,6 @@ public class AccountControllerTest {
 
         assertTrue(mvcResult.getResponse().getContentAsString().contains("50"));
     }
-
-
 
     @Test
     void AccountShouldCreateSavingsAccounts_Created() throws Exception {
@@ -92,9 +79,6 @@ public class AccountControllerTest {
         assertTrue(mvcResult.getResponse().getContentAsString().contains("100"));
 
     }
-    @AfterEach
-    void tearDown() {
-        accountRepository.deleteAll();
-    }
 
 }
+

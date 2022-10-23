@@ -27,9 +27,6 @@ public class CreditCard extends Account {
         super(balance, penaltyFee, primaryOwner, secondaryOwner);
         this.creditLimit = creditLimit;
         this.interestedRate = interestedRate;
-
-        // if (interestedRate !< 100000) throw new Exception("Not accepted");
-        //if (minimumBalance !< 0.1) throw new Exception("Not accepted");
     }
 
     public CreditCard() {

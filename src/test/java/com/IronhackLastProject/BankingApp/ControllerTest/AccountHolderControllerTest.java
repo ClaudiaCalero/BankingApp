@@ -59,6 +59,7 @@ public class AccountHolderControllerTest {
         assertEquals(500L, accountRepository.findById(senderId).get().getBalance().getAmount().longValue());
         assertEquals(1500L, accountRepository.findById(receiverId).get().getBalance().getAmount().longValue());
     }
+
     @Test
     void transfer_money_not_enough_money() throws Exception {
         TransferDTO transferDTO = new TransferDTO("5000.00", 1L , 2L);
@@ -81,10 +82,7 @@ public class AccountHolderControllerTest {
     }
 
 
-    @AfterEach
-    void tearDown() {
-        accountRepository.deleteAll();
-    }
+
 }
 
 

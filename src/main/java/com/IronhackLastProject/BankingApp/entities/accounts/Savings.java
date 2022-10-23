@@ -23,16 +23,13 @@ public class Savings extends Account {
     private BigDecimal interestedRate = BigDecimal.valueOf(0.0025);
 
 
-
     public Savings() {
     }
 
-    public Savings(Money balance, Money penaltyFee, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money minimumBalance, BigDecimal interestedRate) throws Exception {
+    public Savings(Money balance, Money penaltyFee, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money minimumBalance, BigDecimal interestedRate) {
         super(balance, penaltyFee, primaryOwner, secondaryOwner);
         this.minimumBalance = minimumBalance;
         this.interestedRate = interestedRate;
-     // if (interestedRate > 0.5) throw new Exception("Not accepted");
-        //if (minimumBalance !< 100) throw new Exception("Not accepted");
     }
 
     public Savings(Money minimumBalance, BigDecimal interestedRate) {

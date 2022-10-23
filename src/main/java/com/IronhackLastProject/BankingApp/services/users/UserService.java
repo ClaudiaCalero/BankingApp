@@ -31,4 +31,4 @@ public class UserService {
         return thirdPartyRepository.save(thirdParty);
     }
 
-    }
+}
