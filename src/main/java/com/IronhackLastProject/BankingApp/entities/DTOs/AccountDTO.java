@@ -8,9 +8,7 @@ public class AccountDTO {
 
     @NotEmpty
     private String balance;
-
     private String penaltyFee;
-
     @NotNull
     private Long primaryOwner;
     private Long secondaryOwner;

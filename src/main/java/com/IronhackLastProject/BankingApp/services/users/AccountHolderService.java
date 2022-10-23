@@ -19,10 +19,6 @@ import java.util.List;
 
 @Service
 public class AccountHolderService {
-
-    //metodos para crear accountHolder;
-    //metodos para tranferir de una cuenta a la otra;
-    //metodo para que un AH vea su balances;
     @Autowired
     AccountHolderRepository accountHolderRepository;
 

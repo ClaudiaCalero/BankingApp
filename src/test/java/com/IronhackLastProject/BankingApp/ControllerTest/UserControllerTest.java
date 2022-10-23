@@ -64,25 +64,29 @@ class UserControllerTest {
 
     @Test
     void UserShouldCreateAccountHolder_Created() throws Exception {
+        Address address = new Address("Del Valles", "1234", "Parets");
+        LocalDate dateOfBirth = LocalDate.of(1996, 2, 22);
 
-        AccountHolder accountHolder = new AccountHolder("Holi", "1234", "holi");
+        AccountHolder accountHolder = new AccountHolder("Des", "1234567", dateOfBirth, address, "Desi", address);
 
         String body = objectMapper.writeValueAsString(accountHolder);
-        MvcResult mvcResult = mockMvc.perform(post("/admin").content(body).contentType(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult = mockMvc.perform(post("/accountHolder").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("Holi"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Des"));
     }
 
     @Test
     void UserShouldCreateThirdParty_Created() throws Exception {
 
-        ThirdParty thirdParty = new ThirdParty("Holi", "1234", "holi");
+        ThirdParty thirdParty = new ThirdParty("Nurs", "12345", "12345678", "Nuria");
 
         String body = objectMapper.writeValueAsString(thirdParty);
-        MvcResult mvcResult = mockMvc.perform(post("/admin").content(body).contentType(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult = mockMvc.perform(post("/thirdParty").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("Holi"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Nurs"));
     }
+
 }
+

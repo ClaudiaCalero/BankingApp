@@ -12,23 +12,18 @@ public class ThirdParty extends User {
         this.hashKey = hashKey;
         this.name = name;
     }
-
-
     public ThirdParty() {
     }
 
     public String getHashKey() {
         return hashKey;
     }
-
     public void setHashKey(String hashKey) {
         this.hashKey = hashKey;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }

@@ -19,12 +19,11 @@ public class UserService {
     @Autowired
     ThirdPartyRepository thirdPartyRepository;
 
-
     public Admin createAdmin(Admin admin) {
         return adminRepository.save(admin);
     }
 
-  public AccountHolder createAccountHolder(AccountHolder accountHolder){
+    public AccountHolder createAccountHolder(AccountHolder accountHolder){
         return accountHolderRepository.save(accountHolder);
     }
 
@@ -32,4 +31,4 @@ public class UserService {
         return thirdPartyRepository.save(thirdParty);
     }
 
-}
+    }

@@ -14,8 +14,6 @@ public class CreditCard extends Account {
 
 
     @Embedded
-    // @NotBlank(message = "This field can not be blank")
-    //@NotNull(message = "This field can not be null")
     @AttributeOverrides({
             @AttributeOverride(name="currency", column = @Column(name="minimumCurrency")),
             @AttributeOverride(name="amount", column = @Column(name="amountCurrency"))
@@ -23,8 +21,6 @@ public class CreditCard extends Account {
     })
 
    private Money creditLimit = new Money(BigDecimal.valueOf(250));
-
-    //@NotNull(message = "This field can not be null")
     private BigDecimal interestedRate = BigDecimal.valueOf(0.2);
 
     public CreditCard(Money balance, Money penaltyFee, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money creditLimit, BigDecimal interestedRate) {

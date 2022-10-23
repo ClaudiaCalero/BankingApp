@@ -14,18 +14,12 @@ import java.time.LocalDate;
 @Entity
 public class Savings extends Account {
 
-
     @Embedded
-    //@NotBlank(message = "This field can not be blank")
-    //@NotNull(message = "This field can not be null")
     @AttributeOverrides({
             @AttributeOverride(name="currency", column = @Column(name="minimumCurrency")),
             @AttributeOverride(name="amount", column = @Column(name="amountCurrency"))
     })
     private Money minimumBalance = new Money(BigDecimal.valueOf(1000));
-    //private Money minimumBalance;
-    //@NotBlank(message = "This field can not be blank")
-    //@NotNull(message = "This field can not be null")
     private BigDecimal interestedRate = BigDecimal.valueOf(0.0025);
 
 

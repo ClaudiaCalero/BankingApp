@@ -36,13 +36,10 @@ public class AccountHolder extends User {
 
     private Address mailingAddress;
 
-    //@NotBlank(message = "This field can not be blank")
-   // @NotNull(message = "This field can not be null")
     @OneToMany(mappedBy = "primaryOwner")
     @JsonIgnore
     private List<Account> primaryAccountList;
 
-    //@NotNull(message = "This field can not be null")
     @OneToMany(mappedBy = "secondaryOwner")
     @JsonIgnore
     private List<Account> secondaryAccountList;

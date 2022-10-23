@@ -7,12 +7,12 @@ import javax.validation.constraints.NotNull;
 public class Admin extends User {
     @NotNull
     private String name;
-    public Admin() {
-    }
 
     public Admin(String username, String password, String name) {
         super(username, password);
         this.name = name;
+    }
+    public Admin() {
     }
 
     public Admin(String name) {

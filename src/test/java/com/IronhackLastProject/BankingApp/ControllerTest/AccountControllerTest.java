@@ -12,6 +12,7 @@ import com.IronhackLastProject.BankingApp.repositories.accounts.AccountRepositor
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +59,6 @@ public class AccountControllerTest {
 
     @Test
     void AccountShouldCreateCheckingAccounts_Created() throws Exception {
-
-        //public AccountDTO(String balance, String penaltyFee, Long primaryOwner, Long secondaryOwner, String interestedRate, String minimumBalance) {
         AccountDTO accountDTO = new AccountDTO("1000", "50", 1L, 2L, "0.0025", "100");
 
         String body = objectMapper.writeValueAsString(accountDTO);
@@ -93,6 +92,9 @@ public class AccountControllerTest {
         assertTrue(mvcResult.getResponse().getContentAsString().contains("100"));
 
     }
-
+    @AfterEach
+    void tearDown() {
+        accountRepository.deleteAll();
+    }
 
 }

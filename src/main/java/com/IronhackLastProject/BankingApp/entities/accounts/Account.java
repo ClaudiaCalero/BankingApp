@@ -18,33 +18,22 @@ public abstract class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@NotNull
     private Money balance;
 
     @Embedded
-    //@NotBlank(message = "This field can't be blank")
-    //@NotNull(message = "This field can't be null")
     @AttributeOverrides({
             @AttributeOverride(name = "currency", column = @Column(name = "feeCurrency")),
             @AttributeOverride(name = "amount", column = @Column(name = "feeAmount"))
     })
     private Money penaltyFee = new Money(BigDecimal.valueOf(40));
-    //@NotNull
-    //@NotBlank
     @ManyToOne
     @JoinColumn(name = "primaryOwnerId")
     private AccountHolder primaryOwner;
 
     @ManyToOne
     @JoinColumn(name = "secondaryOwnerId")
-    private AccountHolder secondaryOwner; // (optional)
-
-    //@NotNull
-    //@NotBlank
+    private AccountHolder secondaryOwner;
     private LocalDate creationDate;
-
-    //@NotNull
-    //@NotBlank
     private Status status;
 
 

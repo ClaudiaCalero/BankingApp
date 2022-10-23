@@ -14,8 +14,6 @@ import java.time.LocalDate;
 public class Checking extends Account {
 
     @Embedded
-   // @NotBlank(message = "This field can not be blank")
-    //@NotNull(message = "This field can not be null")
     @AttributeOverrides({
             @AttributeOverride(name="currency", column = @Column(name="minimumCurrency")),
             @AttributeOverride(name="amount", column = @Column(name="amountCurrency"))
@@ -25,8 +23,6 @@ public class Checking extends Account {
     private final Money minimumBalance = new Money(BigDecimal.valueOf(250));
 
     @Embedded
-    //@NotBlank(message = "This field can not be blank")
-    //@NotNull(message = "This field can not be null")
     @AttributeOverrides({
             @AttributeOverride(name="currency", column = @Column(name="monthlyCurrency")),
             @AttributeOverride(name="amount", column = @Column(name="monthlyAmount"))

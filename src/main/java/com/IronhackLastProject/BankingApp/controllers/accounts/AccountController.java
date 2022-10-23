@@ -55,5 +55,3 @@ public class AccountController {
     }
 
 }
-//crear 4 tipos cuentas, un party, transferencias entre accountholders y partys, account acceder a balance, admin acceder balance a cualuqier cuenta
-//y si quiera puede modificarlo

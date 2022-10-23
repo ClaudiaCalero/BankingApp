@@ -17,7 +17,6 @@ public class TransferDTO {
     public String getAmount() {
         return amount;
     }
-
     public void setAmount(String amount) {
         this.amount = amount;
     }
@@ -25,7 +24,6 @@ public class TransferDTO {
     public Long getSendingMoneyId() {
         return sendingMoneyId;
     }
-
     public void setSendingMoneyId(Long sendingMoneyId) {
         this.sendingMoneyId = sendingMoneyId;
     }
@@ -38,9 +36,5 @@ public class TransferDTO {
         this.receivingMoneyId = receivingMoneyId;
     }
 
-    /* nombre account holder
-    id account holder que quiere realizar transfe
-    id donde el account holder quiere hacer
 
-    dinero que quiere enviarle*/
 }

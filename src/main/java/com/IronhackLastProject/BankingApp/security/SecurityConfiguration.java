@@ -19,12 +19,10 @@ public class SecurityConfiguration {
 
     @Autowired
     CustomUserDetailsService customUserDetailsService;
-
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConf) throws Exception {
         return authConf.getAuthenticationManager();
@@ -41,7 +39,6 @@ public class SecurityConfiguration {
                 .mvcMatchers(HttpMethod.POST, "/createSavings").hasRole("ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/createCreditCard").hasRole("ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/createChecking").hasRole("ADMIN")
-
                 .mvcMatchers(HttpMethod.GET, "/accounts").hasRole("HOLDER")
                 .mvcMatchers(HttpMethod.PUT, "/changeStatus**").hasRole("HOLDER")
                 .mvcMatchers(HttpMethod.PATCH, "/transfer**").hasRole("ADMIN")
