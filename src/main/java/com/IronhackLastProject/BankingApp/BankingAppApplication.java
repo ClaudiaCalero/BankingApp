@@ -8,7 +8,6 @@ import com.IronhackLastProject.BankingApp.entities.accounts.StudentsChecking;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
 import com.IronhackLastProject.BankingApp.entities.users.Admin;
 import com.IronhackLastProject.BankingApp.entities.users.ThirdParty;
-import com.IronhackLastProject.BankingApp.entities.users.User;
 import com.IronhackLastProject.BankingApp.repositories.accounts.CheckingRepository;
 import com.IronhackLastProject.BankingApp.repositories.accounts.CreditCardRepository;
 import com.IronhackLastProject.BankingApp.repositories.accounts.StudentsCheckingRepository;
@@ -59,6 +58,7 @@ public class BankingAppApplication implements CommandLineRunner {
 		AccountHolder accountHolder2 = new AccountHolder("Soledad", passwordEncoder.encode("1234"), dateOfBirth, address, "Sole",address);
 		accountHolderRepository.saveAll(List.of(accountHolder, accountHolder2));
 		roleRepository.save(new Role("HOLDER", accountHolder));
+		roleRepository.save(new Role("HOLDER", accountHolder2));
 
 
 		Admin admin = new Admin("Claud", passwordEncoder.encode("1234"), "Claud");
@@ -74,21 +74,18 @@ public class BankingAppApplication implements CommandLineRunner {
 		Checking checking2 = new Checking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, accountHolder2);
 
 		checkingRepository.saveAll(List.of(checking1, checking2));
-		roleRepository.save(new Role("HOLDER", accountHolder));
 
 
 		CreditCard creditCard1 = new CreditCard(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, accountHolder, new Money(new BigDecimal(250)),  new BigDecimal(String.valueOf(0.5)));
 		CreditCard creditCard2 = new CreditCard(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, accountHolder2, new Money(new BigDecimal(250)),  new BigDecimal(String.valueOf(0.5)));
 
 		creditCardRepository.saveAll(List.of(creditCard1, creditCard2));
-		roleRepository.save(new Role("HOLDER", accountHolder));
 
 
 		StudentsChecking studentsChecking1 = new StudentsChecking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, accountHolder);
 		StudentsChecking studentsChecking2 = new StudentsChecking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, accountHolder2);
 
 		studentsCheckingRepository.saveAll(List.of(studentsChecking1, studentsChecking2));
-		roleRepository.save(new Role("HOLDER", accountHolder));
 
 		System.out.println(accountHolderRepository.save(accountHolder));
 	}

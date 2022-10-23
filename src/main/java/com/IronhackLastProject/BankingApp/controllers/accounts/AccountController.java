@@ -3,19 +3,23 @@ package com.IronhackLastProject.BankingApp.controllers.accounts;
 
 import com.IronhackLastProject.BankingApp.entities.DTOs.AccountDTO;
 import com.IronhackLastProject.BankingApp.entities.accounts.*;
+import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
 import com.IronhackLastProject.BankingApp.services.accounts.AccountService;
+import com.IronhackLastProject.BankingApp.services.users.AccountHolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AccountController {
 
     @Autowired
     AccountService accountService;
+    @Autowired
+    AccountHolderService accountHolderService;
 
     @PostMapping("/createChecking")
     @ResponseStatus(HttpStatus.CREATED)
@@ -26,7 +30,7 @@ public class AccountController {
 
     @PostMapping("/createSavings")
     @ResponseStatus(HttpStatus.CREATED)
-    public Savings createSavings(@RequestBody AccountDTO savingsDTO) {
+    public Savings createSavings(@RequestBody AccountDTO savingsDTO) throws Exception {
         return accountService.createSavings(savingsDTO);
 
     }
@@ -41,6 +45,13 @@ public class AccountController {
     @ResponseStatus(HttpStatus.CREATED)
     public StudentsChecking createStudentsChecking(@RequestBody AccountDTO studentsCheckingDTO) {
         return accountService.createStudentsChecking(studentsCheckingDTO);
+    }
+
+    @GetMapping("/accounts/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<List<Account>> findOwnedAccountsById(@PathVariable Long id) {
+        AccountHolder owner = accountHolderService.getAccountHolder(id);
+        return accountService.findByPrimaryOwnerOrSecondaryOwner(owner);
     }
 
 }

@@ -38,6 +38,11 @@ public class SecurityConfiguration {
         httpSecurity.authorizeRequests()
                 .mvcMatchers(HttpMethod.GET, "/users").hasAnyRole( "HOLDER", "ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/accountHolder**").hasRole("HOLDER")
+                .mvcMatchers(HttpMethod.POST, "/createSavings").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/createCreditCard").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/createChecking").hasRole("ADMIN")
+
+                .mvcMatchers(HttpMethod.GET, "/accounts").hasRole("HOLDER")
                 .mvcMatchers(HttpMethod.PUT, "/changeStatus**").hasRole("HOLDER")
                 .mvcMatchers(HttpMethod.PATCH, "/transfer**").hasRole("ADMIN")
                 .mvcMatchers(HttpMethod.DELETE, "/deleteAccount**").hasRole("ADMIN")

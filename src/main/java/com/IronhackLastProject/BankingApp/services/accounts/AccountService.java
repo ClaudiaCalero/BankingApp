@@ -5,12 +5,8 @@ import com.IronhackLastProject.BankingApp.embeddable.Money;
 import com.IronhackLastProject.BankingApp.entities.DTOs.AccountDTO;
 import com.IronhackLastProject.BankingApp.entities.accounts.*;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
-import com.IronhackLastProject.BankingApp.repositories.accounts.CheckingRepository;
-import com.IronhackLastProject.BankingApp.repositories.accounts.CreditCardRepository;
-import com.IronhackLastProject.BankingApp.repositories.accounts.SavingsRepository;
-import com.IronhackLastProject.BankingApp.repositories.accounts.StudentsCheckingRepository;
+import com.IronhackLastProject.BankingApp.repositories.accounts.*;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
-import com.IronhackLastProject.BankingApp.services.accounts.interfaces.AccountServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,9 +15,11 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class AccountService implements AccountServiceInterface {
+public class AccountService {
     @Autowired
     AccountHolderRepository accountHolderRepository;
     @Autowired
@@ -32,8 +30,8 @@ public class AccountService implements AccountServiceInterface {
     CreditCardRepository creditCardRepository;
     @Autowired
     StudentsCheckingRepository studentsCheckingRepository;
-
-
+    @Autowired
+    AccountRepository accountRepository;
 
     public Account createChecking(AccountDTO checkingDTO){
 
@@ -62,9 +60,7 @@ public class AccountService implements AccountServiceInterface {
         return checkingRepository.save(checking);
     }
 
-
-
-    public Savings createSavings(AccountDTO savingsDTO){
+    public Savings createSavings(AccountDTO savingsDTO) throws Exception {
 
         Money balance = new Money(new BigDecimal(savingsDTO.getBalance()));
         Money penaltyFee = new Money(new BigDecimal(savingsDTO.getPenaltyFee()));
@@ -81,16 +77,12 @@ public class AccountService implements AccountServiceInterface {
             minimumBalance = new Money(new BigDecimal(savingsDTO.getMinimumBalance()));
         }
 
-
         Savings savings = new Savings(balance, penaltyFee, primaryOwner, secondaryOwner, minimumBalance, interestedRate);
 
         return  savingsRepository.save(savings);
     }
 
-
     public CreditCard createCreditCard(AccountDTO creditCardDTO) {
-
-
         Money balance = new Money(new BigDecimal(creditCardDTO.getBalance()));
         Money penaltyFee = new Money(new BigDecimal(creditCardDTO.getPenaltyFee()));
         AccountHolder primaryOwner = accountHolderRepository.findById(creditCardDTO.getPrimaryOwner()).orElseThrow(()->
@@ -105,7 +97,6 @@ public class AccountService implements AccountServiceInterface {
         }else{
             minimumBalance = new Money(new BigDecimal(creditCardDTO.getMinimumBalance()));
         }
-
 
         CreditCard creditCard = new CreditCard(balance, penaltyFee, primaryOwner, secondaryOwner, minimumBalance, interestedRate);
 
@@ -125,5 +116,10 @@ public class AccountService implements AccountServiceInterface {
         StudentsChecking studentsChecking = new StudentsChecking(balance, penaltyFee, primaryOwner, secondaryOwner);
 
         return studentsCheckingRepository.save(studentsChecking);
+    }
+
+
+    public Optional<List<Account>> findByPrimaryOwnerOrSecondaryOwner(AccountHolder owner) {
+        return accountRepository.findByPrimaryOwnerOrSecondaryOwner(owner, owner);
     }
 }

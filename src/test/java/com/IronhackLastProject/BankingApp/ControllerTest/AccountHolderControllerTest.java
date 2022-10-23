@@ -1,6 +1,7 @@
 package com.IronhackLastProject.BankingApp.ControllerTest;
 
 import com.IronhackLastProject.BankingApp.entities.DTOs.TransferDTO;
+import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
 import com.IronhackLastProject.BankingApp.repositories.accounts.AccountRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
 import com.IronhackLastProject.BankingApp.services.users.AccountHolderService;
@@ -17,8 +18,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,14 +41,14 @@ public class AccountHolderControllerTest {
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-       /* AccountHolder accountHolder = new AccountHolder("Clàudia", "1234",  LocalDate.of(1989, 3, 22),
-                new Address("Calle de la Piruleta", "777", "País de la Gominola");
-        accountHolderRepository.save(accountHolder);*/
+
     }
 
     @Test
     void transfer_money_OK() throws Exception {
-        TransferDTO transferDTO = new TransferDTO("500", 1L , 2L);
+        long senderId = 1L;
+        long receiverId = 2L;
+        TransferDTO transferDTO = new TransferDTO("500", senderId, receiverId);
         String body = objectMapper.writeValueAsString(transferDTO);
         MvcResult mvcResult = mockMvc.perform(patch("/transfer").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isAccepted()).andReturn();
@@ -53,8 +56,8 @@ public class AccountHolderControllerTest {
         System.out.println(mvcResult.getResponse().getContentAsString());
 
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Sole"));
-        assertEquals(500L, accountRepository.findById(1L).get().getBalance().getAmount().longValue());
-
+        assertEquals(500L, accountRepository.findById(senderId).get().getBalance().getAmount().longValue());
+        assertEquals(1500L, accountRepository.findById(receiverId).get().getBalance().getAmount().longValue());
     }
     @Test
     void transfer_money_not_enough_money() throws Exception {
@@ -65,17 +68,22 @@ public class AccountHolderControllerTest {
 
         System.out.println(mvcResult.getResponse().getContentAsString());
 
-        assertEquals("The account doesn't have enough funds", mvcResult.getResponse().getErrorMessage());
-
-        assertEquals("The account doesn't have enough funds", mvcResult.getResponse().getErrorMessage());
-
+        assertEquals("This account do not have enough funds", mvcResult.getResponse().getErrorMessage());
     }
 
     @Test
+    void accountHolderShouldDeleteAccount_Ok() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(delete("/deleteAccount/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+
+        Optional<AccountHolder> accountHolder = accountHolderRepository.findById(1L);
+        assertTrue(accountHolder.isEmpty());
+    }
+
+
     @AfterEach
     void tearDown() {
         accountRepository.deleteAll();
-
     }
 }
 

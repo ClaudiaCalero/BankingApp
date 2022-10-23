@@ -34,7 +34,6 @@ public class Checking extends Account {
     })
     private final Money monthlyMaintenanceFee = new Money(BigDecimal.valueOf(12));
 
-
     public Checking(Money balance, Money penaltyFee, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
         super(balance, penaltyFee, primaryOwner, secondaryOwner);
     }

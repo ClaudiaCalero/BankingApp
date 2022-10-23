@@ -8,7 +8,6 @@ import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
 import com.IronhackLastProject.BankingApp.enums.Status;
 import com.IronhackLastProject.BankingApp.repositories.accounts.AccountRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
-import com.IronhackLastProject.BankingApp.services.users.interfaces.AccountHolderServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import java.util.List;
 
 
 @Service
-public class AccountHolderService implements AccountHolderServiceInterface {
+public class AccountHolderService {
 
     //metodos para crear accountHolder;
     //metodos para tranferir de una cuenta a la otra;
@@ -82,7 +81,7 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     }
 
     public void deleteAccount(Long id) {
-        accountRepository.deleteById(id);
+        accountHolderRepository.deleteById(id);
     }
 
 

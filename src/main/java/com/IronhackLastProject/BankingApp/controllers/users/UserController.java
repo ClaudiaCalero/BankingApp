@@ -6,7 +6,7 @@ import com.IronhackLastProject.BankingApp.entities.users.ThirdParty;
 import com.IronhackLastProject.BankingApp.entities.users.User;
 import com.IronhackLastProject.BankingApp.repositories.users.UserRepository;
 import com.IronhackLastProject.BankingApp.services.users.AccountHolderService;
-import com.IronhackLastProject.BankingApp.services.users.interfaces.UserServiceInterface;
+import com.IronhackLastProject.BankingApp.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 public class UserController {
     @Autowired
-    UserServiceInterface userServiceInterface;
+    UserService userService;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -31,9 +31,8 @@ public class UserController {
     }
     @PostMapping("/admin")
     @ResponseStatus(HttpStatus.CREATED)
-
     public Admin createAdmin(@RequestBody Admin admin){
-        return userServiceInterface.createAdmin(admin);
+        return userService.createAdmin(admin);
 
     }
 
@@ -45,20 +44,18 @@ public class UserController {
     }
 
 
-
     @PostMapping("/accountHolder")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountHolder createAccountHolders(@RequestBody AccountHolder accountHolder){
-        return userServiceInterface.createAccountHolder(accountHolder);
+        return userService.createAccountHolder(accountHolder);
 
     }
-
 
     @PostMapping("/thirdParty")
     @ResponseStatus(HttpStatus.CREATED)
 
     public ThirdParty createThirdParty(@RequestBody ThirdParty thirdParty){
-        return userServiceInterface.createThirdParty(thirdParty);
+        return userService.createThirdParty(thirdParty);
 
     }
 }
