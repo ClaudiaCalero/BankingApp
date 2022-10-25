@@ -77,7 +77,8 @@ public class AccountHolderService {
     }
 
     public void deleteAccount(Long id) {
-        accountHolderRepository.deleteById(id);
+        Account deleteAccount = accountRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found, you give the wrong Id"));
+        accountRepository.deleteById(deleteAccount.getId());
     }
 
 

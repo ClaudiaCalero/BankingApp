@@ -77,8 +77,7 @@ public class AccountHolderControllerTest {
         MvcResult mvcResult = mockMvc.perform(delete("/deleteAccount/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
 
-        Optional<AccountHolder> accountHolder = accountHolderRepository.findById(1L);
-        assertTrue(accountHolder.isEmpty());
+        assertTrue(!accountRepository.existsById(1L));
     }
 
 
