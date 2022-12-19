@@ -6,10 +6,6 @@ import com.IronhackLastProject.BankingApp.entities.users.ThirdParty;
 
 public interface UserServiceInterface {
     Admin createAdmin(Admin admin);
-
     AccountHolder createAccountHolder(AccountHolder accountHolder);
-
     ThirdParty createThirdParty(ThirdParty thirdParty);
-
-
 }

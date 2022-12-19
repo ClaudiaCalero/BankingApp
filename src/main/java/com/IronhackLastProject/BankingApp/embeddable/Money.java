@@ -7,10 +7,8 @@ import java.math.BigDecimal;
 
 @Embeddable
 public class Money {
-
     private static final Currency USD = Currency.getInstance("USD");
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN;
-
     private final Currency currency;
     private BigDecimal amount;
 
@@ -26,6 +24,7 @@ public class Money {
     /**
      * Class constructor specifying amount, and currency. Uses default RoundingMode HALF_EVEN.
      **/
+
     public Money(BigDecimal amount, Currency currency) {
         this(amount, currency, DEFAULT_ROUNDING);
     }
@@ -37,10 +36,10 @@ public class Money {
     /**
      * Class constructor specifying amount. Uses default RoundingMode HALF_EVEN and default currency USD.
      **/
+
     public Money(BigDecimal amount) {
         this(amount, USD, DEFAULT_ROUNDING);
     }
-
 
     public BigDecimal increaseAmount(Money money) {
         setAmount(this.amount.add(money.amount));
@@ -77,5 +76,4 @@ public class Money {
     public String toString() {
         return getCurrency().getSymbol() + " " + getAmount();
     }
-
 }

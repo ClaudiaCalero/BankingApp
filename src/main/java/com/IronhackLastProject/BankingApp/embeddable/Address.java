@@ -7,14 +7,12 @@ public class Address {
     private String streetName;
     private String streetNum;
     private String city;
-
     public Address(String streetName, String streetNum, String city) {
 
         this.streetName = streetName;
         this.streetNum = streetNum;
         this.city = city;
     }
-
     public Address() {
     }
 

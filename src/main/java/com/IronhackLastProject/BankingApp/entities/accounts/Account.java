@@ -2,12 +2,9 @@ package com.IronhackLastProject.BankingApp.entities.accounts;
 
 import com.IronhackLastProject.BankingApp.embeddable.Money;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
-import com.IronhackLastProject.BankingApp.entities.users.User;
 import com.IronhackLastProject.BankingApp.enums.Status;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -17,15 +14,14 @@ public abstract class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Money balance;
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "currency", column = @Column(name = "feeCurrency")),
             @AttributeOverride(name = "amount", column = @Column(name = "feeAmount"))
     })
     private Money penaltyFee = new Money(BigDecimal.valueOf(40));
+
     @ManyToOne
     @JoinColumn(name = "primaryOwnerId")
     private AccountHolder primaryOwner;
@@ -36,7 +32,6 @@ public abstract class Account {
     private LocalDate creationDate;
     private Status status;
 
-
     public Account(Money balance, Money penaltyFee, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
         this.balance = balance;
         this.penaltyFee = penaltyFee;
@@ -44,7 +39,6 @@ public abstract class Account {
         this.secondaryOwner = secondaryOwner;
         this.creationDate = LocalDate.now();
         this.status = Status.ACTIVE;
-
     }
 
     public Account() {

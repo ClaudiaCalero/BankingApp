@@ -33,49 +33,35 @@ public class AccountService {
     AccountRepository accountRepository;
 
     public Account createChecking(AccountDTO checkingDTO){
-
         Money balance = new Money(new BigDecimal(checkingDTO.getBalance()));
         Money penaltyFee = new Money(new BigDecimal(checkingDTO.getPenaltyFee()));
-        AccountHolder primaryOwner = accountHolderRepository.findById(checkingDTO.getPrimaryOwner()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NO_CONTENT));
 
-        AccountHolder secondaryOwner = null;
-        if(checkingDTO.getSecondaryOwner() != null && accountHolderRepository.findById(checkingDTO.getSecondaryOwner()).isPresent()){
-            secondaryOwner = accountHolderRepository.findById(checkingDTO.getSecondaryOwner()).get();
-        }
-        Money minimumBalance = null;
-        if(checkingDTO.getMinimumBalance() == null){
-            minimumBalance = new Money(new BigDecimal(250));
-        }else{
-            minimumBalance = new Money(new BigDecimal(checkingDTO.getMinimumBalance()));
-        }
+        AccountHolder primaryOwner = getPrimaryOwner(checkingDTO);
+        AccountHolder secondaryOwner = getSecondaryOwner(checkingDTO);
 
-        if(Period.between(primaryOwner.getDateOfBirth(), LocalDate.now()).getYears() < 24){
-            return studentsCheckingRepository.save(new StudentsChecking(balance, penaltyFee, primaryOwner, secondaryOwner));
-
-        }
+        StudentsChecking studentsCheckingRepository1 = getStudentsChecking(balance, penaltyFee, primaryOwner, secondaryOwner);
         Checking checking = new Checking(balance, penaltyFee, primaryOwner, secondaryOwner);
 
         return checkingRepository.save(checking);
     }
 
-    public Savings createSavings(AccountDTO savingsDTO) throws Exception {
+    private StudentsChecking getStudentsChecking(Money balance, Money penaltyFee, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
+        if(Period.between(primaryOwner.getDateOfBirth(), LocalDate.now()).getYears() < 24){
+            return studentsCheckingRepository.save(new StudentsChecking(balance, penaltyFee, primaryOwner, secondaryOwner));
 
+        }
+        return null;
+    }
+
+    public Savings createSavings(AccountDTO savingsDTO) throws Exception {
         Money balance = new Money(new BigDecimal(savingsDTO.getBalance()));
         Money penaltyFee = new Money(new BigDecimal(savingsDTO.getPenaltyFee()));
-        AccountHolder primaryOwner = accountHolderRepository.findById(savingsDTO.getPrimaryOwner()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NO_CONTENT));
-        AccountHolder secondaryOwner = accountHolderRepository.findById(savingsDTO.getSecondaryOwner()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NO_CONTENT));
+
+        AccountHolder primaryOwner = getPrimaryOwner(savingsDTO);
+        AccountHolder secondaryOwner = getSecondaryOwner(savingsDTO);
+
         BigDecimal interestedRate =  new BigDecimal(savingsDTO.getInterestedRate());
-
-        Money minimumBalance = null;
-        if(savingsDTO.getMinimumBalance() == null){
-            minimumBalance = new Money(new BigDecimal(5000));
-        }else{
-            minimumBalance = new Money(new BigDecimal(savingsDTO.getMinimumBalance()));
-        }
-
+        Money minimumBalance = getMinimumBalance(savingsDTO);
         Savings savings = new Savings(balance, penaltyFee, primaryOwner, secondaryOwner, minimumBalance, interestedRate);
 
         return  savingsRepository.save(savings);
@@ -84,41 +70,64 @@ public class AccountService {
     public CreditCard createCreditCard(AccountDTO creditCardDTO) {
         Money balance = new Money(new BigDecimal(creditCardDTO.getBalance()));
         Money penaltyFee = new Money(new BigDecimal(creditCardDTO.getPenaltyFee()));
-        AccountHolder primaryOwner = accountHolderRepository.findById(creditCardDTO.getPrimaryOwner()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NO_CONTENT));
-        AccountHolder secondaryOwner = accountHolderRepository.findById(creditCardDTO.getSecondaryOwner()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NO_CONTENT));
+
+        AccountHolder primaryOwner = getPrimaryOwner(creditCardDTO);
+        AccountHolder secondaryOwner = getSecondaryOwner(creditCardDTO);
+
         BigDecimal interestedRate =  new BigDecimal(creditCardDTO.getInterestedRate());
-
-        Money minimumBalance = null;
-        if(creditCardDTO.getMinimumBalance() == null){
-            minimumBalance = new Money(new BigDecimal(5000));
-        }else{
-            minimumBalance = new Money(new BigDecimal(creditCardDTO.getMinimumBalance()));
-        }
-
+        Money minimumBalance = getMinimumBalance(creditCardDTO);
         CreditCard creditCard = new CreditCard(balance, penaltyFee, primaryOwner, secondaryOwner, minimumBalance, interestedRate);
 
         return  creditCardRepository.save(creditCard);
     }
 
     public StudentsChecking createStudentsChecking(AccountDTO studentsCheckingDTO) {
-
         Money balance = new Money(new BigDecimal(studentsCheckingDTO.getBalance()));
         Money penaltyFee = new Money(new BigDecimal(studentsCheckingDTO.getPenaltyFee()));
-        AccountHolder primaryOwner = accountHolderRepository.findById(studentsCheckingDTO.getPrimaryOwner()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NO_CONTENT));
-        AccountHolder secondaryOwner = accountHolderRepository.findById(studentsCheckingDTO.getSecondaryOwner()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NO_CONTENT));
 
+        AccountHolder primaryOwner = getPrimaryOwner(studentsCheckingDTO);
+        AccountHolder secondaryOwner = getSecondaryOwner(studentsCheckingDTO);
 
         StudentsChecking studentsChecking = new StudentsChecking(balance, penaltyFee, primaryOwner, secondaryOwner);
 
         return studentsCheckingRepository.save(studentsChecking);
     }
+    private AccountHolder getPrimaryOwner(AccountDTO studentsCheckingDTO) {
+        return accountHolderRepository.findById(studentsCheckingDTO.getPrimaryOwner()).orElseThrow(()->
+                new ResponseStatusException(HttpStatus.NO_CONTENT));
+    }
 
+    private AccountHolder getSecondaryOwner(AccountDTO studentsCheckingDTO) {
+        if(doesNotHaveSecondaryOwner(studentsCheckingDTO) || secondaryOwnerDoesNotExist(studentsCheckingDTO)) {
+            return null;
+        }
 
+        return getAccountHolder(studentsCheckingDTO);
+    }
+
+    private AccountHolder getAccountHolder(AccountDTO studentsCheckingDTO) {
+        return accountHolderRepository.findById(studentsCheckingDTO.getSecondaryOwner()).get();
+    }
+
+    private boolean secondaryOwnerDoesNotExist(AccountDTO studentsCheckingDTO) {
+        return !accountHolderRepository.findById(studentsCheckingDTO.getSecondaryOwner()).isPresent();
+    }
+
+    private static boolean doesNotHaveSecondaryOwner(AccountDTO studentsCheckingDTO) {
+        return studentsCheckingDTO.getSecondaryOwner() == null;
+    }
+
+    private static Money getMinimumBalance(AccountDTO savingsDTO) {
+        if(savingsDTO.getMinimumBalance() == null){
+            return new Money(new BigDecimal(5000));
+        }
+
+        return new Money(new BigDecimal(savingsDTO.getMinimumBalance()));
+    }
     public Optional<List<Account>> findByPrimaryOwnerOrSecondaryOwner(AccountHolder owner) {
         return accountRepository.findByPrimaryOwnerOrSecondaryOwner(owner, owner);
     }
+
+
+
 }

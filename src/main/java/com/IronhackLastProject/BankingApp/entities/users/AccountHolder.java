@@ -5,25 +5,13 @@ import com.IronhackLastProject.BankingApp.entities.accounts.Account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 public class AccountHolder extends User {
-
-    //@NotBlank(message = "This field can not be blank")
-    //@NotNull(message = "This field can not be null")
     private LocalDate dateOfBirth;
-
-    //@NotBlank(message = "This field can not be blank")
-    //@NotNull(message = "This field can not be null")
     private Address primaryAddress;
-
-    //@NotBlank(message = "This field can not be blank")
-    //@NotNull(message = "This field can not be null")
     private String name;
     @Embedded
     @AttributeOverrides({
@@ -102,6 +90,4 @@ public class AccountHolder extends User {
     public void setSecondaryAccountList(List<Account> secondaryAccountList) {
         this.secondaryAccountList = secondaryAccountList;
     }
-
-
 }

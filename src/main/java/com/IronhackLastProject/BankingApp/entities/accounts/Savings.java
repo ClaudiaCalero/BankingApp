@@ -2,18 +2,11 @@ package com.IronhackLastProject.BankingApp.entities.accounts;
 
 import com.IronhackLastProject.BankingApp.embeddable.Money;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
-import com.IronhackLastProject.BankingApp.enums.Status;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-
 @Entity
 public class Savings extends Account {
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name="currency", column = @Column(name="minimumCurrency")),

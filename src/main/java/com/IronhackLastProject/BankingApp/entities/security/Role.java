@@ -1,4 +1,4 @@
-package com.IronhackLastProject.BankingApp.security;
+package com.IronhackLastProject.BankingApp.entities.security;
 
 
 import com.IronhackLastProject.BankingApp.entities.users.User;
@@ -7,14 +7,11 @@ import javax.persistence.*;
 
 @Entity
 public class Role {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
     private String role;
-
     @ManyToOne
     private User user;
 

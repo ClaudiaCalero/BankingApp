@@ -1,4 +1,4 @@
-package com.IronhackLastProject.BankingApp.security;
+package com.IronhackLastProject.BankingApp.entities.security;
 
 import com.IronhackLastProject.BankingApp.services.users.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,6 @@ public class SecurityConfiguration {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConf) throws Exception {
         return authConf.getAuthenticationManager();
     }
-
-
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.httpBasic();

@@ -2,10 +2,8 @@ package com.IronhackLastProject.BankingApp.entities.DTOs;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 public class AccountDTO {
-
     @NotEmpty
     private String balance;
     private String penaltyFee;
@@ -72,6 +70,4 @@ public class AccountDTO {
     public void setMinimumBalance(String minimumBalance) {
         this.minimumBalance = minimumBalance;
     }
-
-
 }

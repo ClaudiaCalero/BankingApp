@@ -2,17 +2,11 @@ package com.IronhackLastProject.BankingApp.entities.accounts;
 
 import com.IronhackLastProject.BankingApp.embeddable.Money;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
-import com.IronhackLastProject.BankingApp.enums.Status;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-
 @Entity
 public class CreditCard extends Account {
-
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name="currency", column = @Column(name="minimumCurrency")),
@@ -28,10 +22,8 @@ public class CreditCard extends Account {
         this.creditLimit = creditLimit;
         this.interestedRate = interestedRate;
     }
-
     public CreditCard() {
     }
-
 
     public Money getCreditLimit() {
         return creditLimit;

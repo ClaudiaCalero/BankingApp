@@ -26,36 +26,30 @@ public class UserController {
     @GetMapping("/users")
     public List<User> findAll(@AuthenticationPrincipal UserDetails userDetails) {
         System.out.println(userDetails.getUsername());
-
         return userRepository.findAll();
     }
+
     @PostMapping("/admin")
     @ResponseStatus(HttpStatus.CREATED)
-    public Admin createAdmin(@RequestBody Admin admin){
+    public Admin createAdmin(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Admin admin){
         return userService.createAdmin(admin);
-
     }
 
     @GetMapping("/accountHolder/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccountHolder getAccountHolder(@PathVariable Long id) {
+    public AccountHolder getAccountHolder(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id) {
         return accountHolderService.getAccountHolder(id);
-
     }
-
 
     @PostMapping("/accountHolder")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccountHolder createAccountHolders(@RequestBody AccountHolder accountHolder){
+    public AccountHolder createAccountHolders(@AuthenticationPrincipal UserDetails userDetails, @RequestBody AccountHolder accountHolder){
         return userService.createAccountHolder(accountHolder);
-
     }
 
     @PostMapping("/thirdParty")
     @ResponseStatus(HttpStatus.CREATED)
-
-    public ThirdParty createThirdParty(@RequestBody ThirdParty thirdParty){
+    public ThirdParty createThirdParty(@AuthenticationPrincipal UserDetails userDetails, @RequestBody ThirdParty thirdParty){
         return userService.createThirdParty(thirdParty);
-
     }
 }

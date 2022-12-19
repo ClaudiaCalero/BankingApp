@@ -1,7 +1,5 @@
 package com.IronhackLastProject.BankingApp.ControllerTest;
 
-import com.IronhackLastProject.BankingApp.embeddable.Address;
-import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
 import com.IronhackLastProject.BankingApp.entities.users.Admin;
 import com.IronhackLastProject.BankingApp.entities.users.ThirdParty;
 import com.IronhackLastProject.BankingApp.repositories.users.AccountHolderRepository;
@@ -18,8 +16,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,11 +27,9 @@ class UserControllerTest {
     AccountHolderRepository accountHolderRepository;
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
@@ -46,7 +40,6 @@ class UserControllerTest {
 
     @Test
     void UserShouldCreateAdmin_Created() throws Exception {
-
         Admin admin = new Admin("Holi", "1234", "holi");
 
         String body = objectMapper.writeValueAsString(admin);
@@ -56,23 +49,20 @@ class UserControllerTest {
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Holi"));
     }
 
-    @Test
+   /* @Test
     void UserShouldCreateAccountHolder_Created() throws Exception {
 
         Address address = new Address("Del Valles", "12345", "desi@hola");
-        LocalDate dateOfBirth = LocalDate.of(1996, 2, 22);
-        AccountHolder accountHolder = new AccountHolder("Des", "1234567", dateOfBirth, address, "Desi", address);
-
+        AccountHolder accountHolder = new AccountHolder("Des", "1234567", LocalDate.of(1996, 2, 22), address, "Desi", address);
         String body = objectMapper.writeValueAsString(accountHolder);
         MvcResult mvcResult = mockMvc.perform(post("/accountHolder").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Des"));
-    }
+    }*/
 
     @Test
     void UserShouldCreateThirdParty_Created() throws Exception {
-
         ThirdParty thirdParty = new ThirdParty("Nurs", "12345", "12345678", "Nuria");
 
         String body = objectMapper.writeValueAsString(thirdParty);

@@ -16,49 +16,45 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.util.List;
 
-
 @Service
 public class AccountHolderService {
     @Autowired
     AccountHolderRepository accountHolderRepository;
-
     @Autowired
     AccountRepository accountRepository;
 
     public TransferAnswerDTO transferFromOneAccountToAnother(TransferDTO transferDTO) {
-
-        if (accountRepository.findById(transferDTO.getReceivingMoneyId()).isPresent() && accountRepository.findById(transferDTO.getSendingMoneyId()).isPresent()) {
-
-            Account sendingAccount = accountRepository.findById(transferDTO.getSendingMoneyId()).get();
-            Account receivingAccount = accountRepository.findById(transferDTO.getReceivingMoneyId()).get();
-            BigDecimal amount = new BigDecimal(transferDTO.getAmount());
-
-            if (sendingAccount.getBalance().getAmount().compareTo(amount) < 0) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This account do not have enough funds");
-            }
-            sendingAccount.setBalance(new Money(sendingAccount.getBalance().decreaseAmount(amount)));
-            receivingAccount.setBalance(new Money(receivingAccount.getBalance().increaseAmount(amount)));
-            accountRepository.saveAll(List.of(sendingAccount, receivingAccount));
-            return new TransferAnswerDTO(sendingAccount.getPrimaryOwner().getName(), receivingAccount.getPrimaryOwner().getName(), amount);
+        boolean neitherOfBothAccountsExist = !accountRepository.findById(transferDTO.getReceivingMoneyId()).isPresent() || !accountRepository.findById(transferDTO.getSendingMoneyId()).isPresent();
+        if (neitherOfBothAccountsExist) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "one or both of the accounts do not exist");
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "one or both of the accounts do not exist");
+        Account sendingAccount = accountRepository.findById(transferDTO.getSendingMoneyId()).get();
+        Account receivingAccount = accountRepository.findById(transferDTO.getReceivingMoneyId()).get();
+        BigDecimal amount = new BigDecimal(transferDTO.getAmount());
 
+        if (sendingAccount.getBalance().getAmount().compareTo(amount) < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This account do not have enough funds");
+        }
+        sendingAccount.setBalance(new Money(sendingAccount.getBalance().decreaseAmount(amount)));
+        receivingAccount.setBalance(new Money(receivingAccount.getBalance().increaseAmount(amount)));
+        accountRepository.saveAll(List.of(sendingAccount, receivingAccount));
+
+        return new TransferAnswerDTO(sendingAccount.getPrimaryOwner().getName(), receivingAccount.getPrimaryOwner().getName(), amount);
 
     }
 
     public Money toCheckBalance(Long id, Long accountId){
-
-        if(accountHolderRepository.findById(id).isPresent() && accountRepository.findById(accountId).isPresent()) {
-            AccountHolder holderId = accountHolderRepository.findById(id).get();
-            Account account = accountRepository.findById(accountId).get();
-            if (account.getPrimaryOwner().getId().equals(holderId.getId()) || account.getSecondaryOwner().getId().equals(holderId.getId())) {
-                return account.getBalance();
-            }else{
-                throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE," ");
-            }
-
+        if (!accountRepository.findById(accountId).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account Holder do not exist");
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account Holder do not exist");
+
+        Account account = accountRepository.findById(accountId).get();
+        boolean isNotAnAccountOwner = !account.getPrimaryOwner().getId().equals(id) && !account.getSecondaryOwner().getId().equals(id);
+        if (isNotAnAccountOwner) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE," ");
+        }
+
+        return account.getBalance();
     }
 
     public Account changeAccountStatus(Status status, Long id){

@@ -3,7 +3,6 @@ package com.IronhackLastProject.BankingApp.entities.DTOs;
 import java.math.BigDecimal;
 
 public class TransferAnswerDTO {
-
     private String sendingName;
     private String receivingName;
     private BigDecimal amount;

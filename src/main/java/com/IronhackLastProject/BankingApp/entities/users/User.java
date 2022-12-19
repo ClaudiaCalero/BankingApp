@@ -1,6 +1,6 @@
 package com.IronhackLastProject.BankingApp.entities.users;
 
-import com.IronhackLastProject.BankingApp.security.Role;
+import com.IronhackLastProject.BankingApp.entities.security.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -63,7 +62,4 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
-
-
-
 }

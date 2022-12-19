@@ -8,10 +8,8 @@ import com.IronhackLastProject.BankingApp.repositories.users.AdminRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.ThirdPartyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 @Service
 public class UserService {
-
     @Autowired
     AdminRepository adminRepository;
     @Autowired
@@ -30,5 +28,4 @@ public class UserService {
     public ThirdParty createThirdParty(ThirdParty thirdParty) {
         return thirdPartyRepository.save(thirdParty);
     }
-
 }

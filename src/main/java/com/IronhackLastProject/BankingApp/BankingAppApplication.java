@@ -8,12 +8,11 @@ import com.IronhackLastProject.BankingApp.entities.accounts.StudentsChecking;
 import com.IronhackLastProject.BankingApp.entities.users.AccountHolder;
 import com.IronhackLastProject.BankingApp.entities.users.Admin;
 import com.IronhackLastProject.BankingApp.entities.users.ThirdParty;
-import com.IronhackLastProject.BankingApp.entities.users.User;
 import com.IronhackLastProject.BankingApp.repositories.accounts.CheckingRepository;
 import com.IronhackLastProject.BankingApp.repositories.accounts.CreditCardRepository;
 import com.IronhackLastProject.BankingApp.repositories.accounts.StudentsCheckingRepository;
 import com.IronhackLastProject.BankingApp.repositories.users.*;
-import com.IronhackLastProject.BankingApp.security.Role;
+import com.IronhackLastProject.BankingApp.entities.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -37,8 +36,6 @@ public class BankingAppApplication implements CommandLineRunner {
 	@Autowired
 	StudentsCheckingRepository studentsCheckingRepository;
 	@Autowired
-	UserRepository userRepository;
-	@Autowired
 	RoleRepository roleRepository;
 	@Autowired
 	AdminRepository adminRepository;
@@ -52,43 +49,34 @@ public class BankingAppApplication implements CommandLineRunner {
 	}
 
 	public void run(String... args) throws Exception {
-		Address address = new Address("Calle de la Piruleta", "777", "País de la Gominola");
+		Address address = new Address("Calle Pedraforca", "123", "Barcelona");
 		LocalDate dateOfBirth = LocalDate.of(1996, 4, 26);
 
 		AccountHolder accountHolder = new AccountHolder("Clàudia", passwordEncoder.encode("1234"), dateOfBirth, address, "Clàudia",address);
-		AccountHolder accountHolder2 = new AccountHolder("Soledad", passwordEncoder.encode("1234"), dateOfBirth, address, "Sole",address);
+		AccountHolder accountHolder2 = new AccountHolder("Nuria", passwordEncoder.encode("4567"), dateOfBirth, address, "Nuria",address);
 		accountHolderRepository.saveAll(List.of(accountHolder, accountHolder2));
 		roleRepository.save(new Role("HOLDER", accountHolder));
+		roleRepository.save(new Role("HOLDER", accountHolder2));
 
-
-		Admin admin = new Admin("Claud", passwordEncoder.encode("1234"), "Claud");
+		Admin admin = new Admin("Xavi", passwordEncoder.encode("1234"), "Xavi");
 		adminRepository.save(admin);
 		roleRepository.save(new Role("ADMIN", admin));
 
-		ThirdParty thirdParty = new ThirdParty("Cyltia",passwordEncoder.encode("1234"), "123", "Cyltia");
+		ThirdParty thirdParty = new ThirdParty("Cyltia",passwordEncoder.encode("7890"), "789", "Cyltia");
 		thirdPartyRepository.save(thirdParty);
 		roleRepository.save(new Role("THIRD", thirdParty));
 
-
-		Checking checking1 = new Checking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, accountHolder);
-		Checking checking2 = new Checking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, accountHolder2);
-
+		Checking checking1 = new Checking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, null);
+		Checking checking2 = new Checking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, null);
 		checkingRepository.saveAll(List.of(checking1, checking2));
-		roleRepository.save(new Role("HOLDER", accountHolder));
 
-
-		CreditCard creditCard1 = new CreditCard(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, accountHolder, new Money(new BigDecimal(250)),  new BigDecimal(String.valueOf(0.5)));
-		CreditCard creditCard2 = new CreditCard(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, accountHolder2, new Money(new BigDecimal(250)),  new BigDecimal(String.valueOf(0.5)));
-
+		CreditCard creditCard1 = new CreditCard(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, null, new Money(new BigDecimal(250)),  new BigDecimal(String.valueOf(0.5)));
+		CreditCard creditCard2 = new CreditCard(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, null, new Money(new BigDecimal(250)),  new BigDecimal(String.valueOf(0.5)));
 		creditCardRepository.saveAll(List.of(creditCard1, creditCard2));
-		roleRepository.save(new Role("HOLDER", accountHolder));
 
-
-		StudentsChecking studentsChecking1 = new StudentsChecking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, accountHolder);
-		StudentsChecking studentsChecking2 = new StudentsChecking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, accountHolder2);
-
+		StudentsChecking studentsChecking1 = new StudentsChecking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder, null);
+		StudentsChecking studentsChecking2 = new StudentsChecking(new Money(new BigDecimal(1000)), new Money(new BigDecimal(50)), accountHolder2, null);
 		studentsCheckingRepository.saveAll(List.of(studentsChecking1, studentsChecking2));
-		roleRepository.save(new Role("HOLDER", accountHolder));
 
 		System.out.println(accountHolderRepository.save(accountHolder));
 	}
