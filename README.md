@@ -132,8 +132,9 @@ Good luck and have fun!
 Interaction with the application is possible through HTTP requests.
 
 ## GET Accounts
-POST: localhost:8080/accounts/1
-Output data:
+###POST: localhost:8080/accounts/1
+
+### Output data:
 ![getAccount](https://user-images.githubusercontent.com/92159714/208536282-2244366a-51a3-4b82-949d-e046f139d8ff.jpg)
 ![getAccount1](https://user-images.githubusercontent.com/92159714/208536280-938c909a-3203-4634-bd9b-b720d4bbe086.jpg)
 ![getAccount2](https://user-images.githubusercontent.com/92159714/208536285-b7d2bde0-d330-424e-97d8-391598f68a3c.jpg)
