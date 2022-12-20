@@ -342,10 +342,10 @@ Data: {
 
 
 # What can be improved here:
-Add more test coverage
-Add Login/register
+- Add more test coverage
+- Add Login/register
 minimumBalance, monthlyMaintenanceFee, Interest and Fees should be applied appropriately and implemented
-Do the extra bonus
+- Do the extra bonus
 
 ## <img src="http://37.media.tumblr.com/44d4fb34d7d9a0407c8fd5520e2c3123/tumblr_nago0vkGOD1tbhv9ro1_500.gif" width="40"> If you've made it until here and can read this, I want you to know that you are awesome, have a really nice day! 
 # See ya <3 <img src="https://c.tenor.com/p2Fs2DoSLWYAAAAC/hello-cute.gif" width="40">
