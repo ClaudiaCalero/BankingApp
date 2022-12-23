@@ -132,7 +132,7 @@ Good luck and have fun!
 Interaction with the application is possible through HTTP requests.
 
 ## GET Accounts
-### POST: localhost:8080/accounts/1
+### GET: localhost:8080/accounts/1
 
 ### Output data:
 ![getAccount](https://user-images.githubusercontent.com/92159714/208536282-2244366a-51a3-4b82-949d-e046f139d8ff.jpg)
@@ -145,7 +145,7 @@ Interaction with the application is possible through HTTP requests.
 
 
 ## GET AccountHolder
-### POST: localhost:8080/accountHolder/1
+### GET: localhost:8080/accountHolder/1
 ![getAccountHolder](https://user-images.githubusercontent.com/92159714/208536370-b72ac340-cd60-4ca8-9987-3d5ec8eb7783.jpg)
 
 ### Output data:
@@ -154,7 +154,7 @@ Interaction with the application is possible through HTTP requests.
 
 
 ## GET Users
-### POST: localhost:8080/users
+### GET: localhost:8080/users
 ![getUsers](https://user-images.githubusercontent.com/92159714/208536405-2365b7a1-b91c-4339-b15d-3221069f24f8.jpg)
 
 ### Output data:
@@ -279,7 +279,7 @@ Interaction with the application is possible through HTTP requests.
 
 
 ## GET CreateSavings
-### POST: localhost:8080/createSavings
+### GET: localhost:8080/createSavings
 
 ### Data:  {
     "balance":"500",
@@ -299,7 +299,7 @@ Interaction with the application is possible through HTTP requests.
 ![createSavings3](https://user-images.githubusercontent.com/92159714/208536110-90eeafa8-0349-4a1a-9dcc-1845e5310d15.jpg)
 
 ## PATCH Transfer
-### POST: localhost:8080/transfer
+### PATCH: localhost:8080/transfer
 
 Data: {
     "amount": "445",
@@ -315,7 +315,7 @@ Data: {
 
 
 ## PUT ChangeStatus
-### POST: localhost:8080/changeStatus?status=FROZEN&id=1
+### PUT: localhost:8080/changeStatus?status=FROZEN&id=1
 
 ### Data: 
 ![putChangeStatus](https://user-images.githubusercontent.com/92159714/208536842-3a1ddbae-75d1-4515-af08-28e71c492c4b.jpg)
@@ -327,7 +327,7 @@ Data: {
 ![putChangeStatus3](https://user-images.githubusercontent.com/92159714/208536840-b2aa22d2-8f17-4a41-9ea6-31bcde3f828b.jpg)
 
 ## DELETE Account
-### POST: localhost:8080/deleteAccount/2
+### DELETE: localhost:8080/deleteAccount/2
 ### Data: 
 ![deleteAccount](https://user-images.githubusercontent.com/92159714/208536180-83757e4e-79d2-40a7-8ba9-58bdd47ec2f0.jpg)
 
